@@ -1,8 +1,7 @@
 import sys
 import asyncio
 from crawl import crawl_site_async
-from get_html import get_html
-
+from json_report import write_json_report
 
 async def main() -> None:
     if len(sys.argv) < 4:
@@ -32,6 +31,7 @@ async def main() -> None:
     for page in page_data.values():
         print(f"Found {len(page["outgoing_links"])} outgoing links on {page["url"]}")
 
+    write_json_report(page_data)
 
 if __name__ == "__main__":
     asyncio.run(main())
