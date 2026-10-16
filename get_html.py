@@ -9,8 +9,14 @@ def get_html(url):
     if resp.status_code > 399:
         raise Exception(f"got HTTP error: {resp.status_code} {resp.reason}")
 
-    if resp.headers["content-type"] != "text/html":
-        raise Exception(f"got non-HTML response: {resp.headers.get("content-type", "")}")
+    if resp.headers["Content-Type"] != "text/html":
+        raise Exception(f"got non-HTML response: {resp.headers.get("Content-Type", "")}")
 
     return resp.text
     
+def safe_get_html(url: str) -> str | None:
+    try:
+        return get_html(url)
+    except Exception as e:
+        print(f"{e}")
+        return None
